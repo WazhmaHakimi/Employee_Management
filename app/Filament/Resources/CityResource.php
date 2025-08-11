@@ -28,12 +28,12 @@ class CityResource extends Resource
         return $form
             ->schema([
                 Section::make()
-                ->schema([
-                    Select::make('state_id')
-                    ->relationship('state', 'name'),
-                    TextInput::make('name')
-                ])
-                ->columns(2)
+                    ->schema([
+                        Select::make('state_id')
+                            ->relationship('state', 'name'),
+                        TextInput::make('name')
+                    ])
+                    ->columns(2)
             ]);
     }
 
@@ -42,17 +42,17 @@ class CityResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('id')
-                ->searchable()
-                ->sortable()
-                ->toggleable(),
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('state.name')
-                ->searchable()
-                ->sortable()
-                ->toggleable(),
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('name')
-                ->searchable()
-                ->sortable()
-                ->toggleable(),
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
             ])
             ->filters([
                 //

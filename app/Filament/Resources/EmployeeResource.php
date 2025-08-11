@@ -6,9 +6,16 @@ use App\Filament\Resources\EmployeeResource\Pages;
 use App\Filament\Resources\EmployeeResource\RelationManagers;
 use App\Models\Employee;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -23,7 +30,45 @@ class EmployeeResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Section::make()
+                    ->schema([
+                        Select::make('country_id')
+                            ->relationship('country', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->required(),
+                        Select::make('state_id')
+                            ->relationship('state', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->required(),
+                        Select::make('city_id')
+                            ->relationship('city', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->required(),
+                        Select::make('department_id')
+                            ->relationship('department', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->required(),
+                        TextInput::make('first_name')
+                            ->required(),
+                        TextInput::make('last_name')
+                            ->required(),
+                        TextInput::make('zip_code')
+                            ->required()
+                            ->columnSpanFull(),
+                        DatePicker::make('birth_date')
+                            ->before(now())
+                            ->required(),
+                        DatePicker::make('hired_date')
+                            ->default(now())
+                            ->required(),
+                        Textarea::make('address')
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(2),
             ]);
     }
 
@@ -31,13 +76,48 @@ class EmployeeResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('first_name')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('last_name')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('country.name')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('state.name')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('city.name')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('department.name')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('birth_date')
+                    ->date()
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('hired_date')
+                    ->date()
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
             ])
             ->filters([
-                //
+                SelectFilter::make('department')
+                    ->relationship('department', 'name')
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

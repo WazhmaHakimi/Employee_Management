@@ -27,9 +27,9 @@ class DepartmentResource extends Resource
         return $form
             ->schema([
                 Section::make()
-                ->schema([
-                    TextInput::make('name')
-                ])
+                    ->schema([
+                        TextInput::make('name')
+                    ])
             ]);
     }
 
@@ -38,13 +38,13 @@ class DepartmentResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('id')
-                ->toggleable()
-                ->searchable()
-                ->toggleable(),
+                    ->toggleable()
+                    ->searchable()
+                    ->toggleable(),
                 TextColumn::make('name')
-                ->toggleable()
-                ->searchable()
-                ->toggleable(),
+                    ->toggleable()
+                    ->searchable()
+                    ->toggleable(),
             ])
             ->filters([
                 //
