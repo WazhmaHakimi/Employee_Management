@@ -4,7 +4,11 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\EmployeeResource\Pages;
 use App\Filament\Resources\EmployeeResource\RelationManagers;
+use App\Models\City;
+use App\Models\Country;
 use App\Models\Employee;
+use App\Models\State;
+use Doctrine\DBAL\Driver\Mysqli\Initializer\Options;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Section;
@@ -33,17 +37,46 @@ class EmployeeResource extends Resource
                 Section::make()
                     ->schema([
                         Select::make('country_id')
-                            ->relationship('country', 'name')
+                            ->label('Country')
+                            ->options(Country::all()->pluck('name', 'id')->toArray())
+                            ->afterStateUpdated(
+                                fn (callable $set) => $set('state_id', null)
+                            )
+                            ->reactive()
                             ->searchable()
                             ->preload()
                             ->required(),
                         Select::make('state_id')
-                            ->relationship('state', 'name')
+                            ->label('State')
+                            ->options(
+                                function (callable $get) {
+                                    $country = Country::find($get('country_id'));
+
+                                    if(!$country) {
+                                        return State::all()->pluck('name', 'id');
+                                    }
+                                    return $country->states->pluck('name', 'id');
+                                }
+                            )
+                            ->afterStateUpdated(
+                                fn (callable $set) => $set('city_id', null)
+                            )
+                            ->reactive()
                             ->searchable()
                             ->preload()
                             ->required(),
                         Select::make('city_id')
-                            ->relationship('city', 'name')
+                        ->label('City')
+                            ->options(function (callable $get) {
+                                $state = State::find($get('state_id'));
+
+                                if(!$state) {
+                                    return City::all()->pluck('name', 'id');
+                                }
+
+                                return $state->cities->pluck('name', 'id');
+                            })
+                            ->reactive()
                             ->searchable()
                             ->preload()
                             ->required(),
