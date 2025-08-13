@@ -21,7 +21,11 @@ class CityResource extends Resource
 {
     protected static ?string $model = City::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office';
+
+    protected static ?string $navigationGroup = 'System Management';
+
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
@@ -30,8 +34,11 @@ class CityResource extends Resource
                 Section::make()
                     ->schema([
                         Select::make('state_id')
-                            ->relationship('state', 'name'),
+                            ->relationship('state', 'name')
+                            ->required(),
                         TextInput::make('name')
+                        ->required()
+                        ->maxLength(255)
                     ])
                     ->columns(2)
             ]);
