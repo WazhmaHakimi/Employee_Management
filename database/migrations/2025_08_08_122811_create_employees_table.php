@@ -36,6 +36,8 @@ return new class extends Migration
             $table->char('zip_code');
             $table->date('birth_date');
             $table->date('hired_date');
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }
