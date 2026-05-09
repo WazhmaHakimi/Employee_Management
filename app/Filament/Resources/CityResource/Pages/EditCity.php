@@ -13,7 +13,18 @@ class EditCity extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            Actions\ViewAction::make(),
+            Actions\DeleteAction::make()
+                ->requiresConfirmation()
+                ->modalHeading('Delete City')
+                ->modalDescription('Are you sure you want to delete this city? This action cannot be undone.')
+                ->modalSubmitActionLabel('Yes, delete it')
+                ->modalCancelActionLabel('Cancel'),
         ];
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
     }
 }

@@ -13,7 +13,12 @@ class ListCities extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('New City')
+                ->modalHeading('Create New City')
+                ->modalDescription('Fill in the details to create a new city.')
+                ->modalSubmitActionLabel('Create City')
+                ->modalCancelActionLabel('Cancel'),
         ];
     }
 }
