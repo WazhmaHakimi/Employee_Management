@@ -18,6 +18,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -38,7 +40,7 @@ class EmployeesRelationManager extends RelationManager
                             ->label('Country')
                             ->options(Country::all()->pluck('name', 'id')->toArray())
                             ->afterStateUpdated(
-                                fn (callable $set) => $set('state_id', null)
+                                fn (Set $set) => $set('state_id', null)
                             )
                             ->reactive()
                             ->searchable()
@@ -47,7 +49,7 @@ class EmployeesRelationManager extends RelationManager
                         Select::make('state_id')
                             ->label('State')
                             ->options(
-                                function (callable $get) {
+                                function (Get $get) {
                                     $country = Country::find($get('country_id'));
 
                                     if(!$country) {
@@ -57,7 +59,7 @@ class EmployeesRelationManager extends RelationManager
                                 }
                             )
                             ->afterStateUpdated(
-                                fn (callable $set) => $set('city_id', null)
+                                fn (Set $set) => $set('city_id', null)
                             )
                             ->reactive()
                             ->searchable()
@@ -65,7 +67,7 @@ class EmployeesRelationManager extends RelationManager
                             ->required(),
                         Select::make('city_id')
                         ->label('City')
-                            ->options(function (callable $get) {
+                            ->options(function (Get $get) {
                                 $state = State::find($get('state_id'));
 
                                 if(!$state) {

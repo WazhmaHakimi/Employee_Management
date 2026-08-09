@@ -5,19 +5,22 @@ namespace App\Filament\Resources\CityResource\RelationManagers;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\State;
-use Filament\Forms;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class EmployeesRelationManager extends RelationManager
 {
@@ -33,7 +36,7 @@ class EmployeesRelationManager extends RelationManager
                             ->label('Country')
                             ->options(Country::all()->pluck('name', 'id')->toArray())
                             ->afterStateUpdated(
-                                fn(callable $set) => $set('state_id', null)
+                                fn(Set $set) => $set('state_id', null)
                             )
                             ->reactive()
                             ->searchable()
@@ -42,7 +45,7 @@ class EmployeesRelationManager extends RelationManager
                         Select::make('state_id')
                             ->label('State')
                             ->options(
-                                function (callable $get) {
+                                function (Get $get) {
                                     $country = Country::find($get('country_id'));
 
                                     if (!$country) {
@@ -52,7 +55,7 @@ class EmployeesRelationManager extends RelationManager
                                 }
                             )
                             ->afterStateUpdated(
-                                fn(callable $set) => $set('city_id', null)
+                                fn(Set $set) => $set('city_id', null)
                             )
                             ->reactive()
                             ->searchable()
@@ -60,7 +63,7 @@ class EmployeesRelationManager extends RelationManager
                             ->required(),
                         Select::make('city_id')
                             ->label('City')
-                            ->options(function (callable $get) {
+                            ->options(function (Get $get) {
                                 $state = State::find($get('state_id'));
 
                                 if (!$state) {
@@ -143,15 +146,15 @@ class EmployeesRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }

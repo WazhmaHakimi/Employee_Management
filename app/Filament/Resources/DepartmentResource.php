@@ -57,7 +57,6 @@ class DepartmentResource extends Resource
                     ->toggleable(),
             ])
             ->filters([
-                EmployeesRelationManager::class,
             ])
             ->actions([
                 EditAction::make(),
