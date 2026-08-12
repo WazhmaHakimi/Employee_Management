@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\StateResource\Pages;
+namespace App\Filament\Resources\States\Pages;
 
-use App\Filament\Resources\StateResource;
-use Filament\Actions;
+use App\Filament\Resources\States\StateResource;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
 class ListStates extends ListRecords
@@ -13,7 +13,7 @@ class ListStates extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            CreateAction::make(),
         ];
     }
 }
