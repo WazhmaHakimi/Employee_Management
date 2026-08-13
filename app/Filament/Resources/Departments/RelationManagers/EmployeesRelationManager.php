@@ -1,27 +1,36 @@
 <?php
 
-namespace App\Filament\Resources\DepartmentResource\RelationManagers;
+namespace App\Filament\Resources\Departments\RelationManagers;
 
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Employee;
 use App\Models\State;
+use Filament\Actions\AssociateAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\DissociateAction;
+use Filament\Actions\DissociateBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Forms;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Schema;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
-use Filament\Tables;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -34,13 +43,13 @@ class EmployeesRelationManager extends RelationManager
     {
         return $schema
             ->components([
-                 Section::make()
+                Section::make()
                     ->schema([
                         Select::make('country_id')
                             ->label('Country')
                             ->options(Country::all()->pluck('name', 'id')->toArray())
                             ->afterStateUpdated(
-                                fn (Set $set) => $set('state_id', null)
+                                fn(Set $set) => $set('state_id', null)
                             )
                             ->reactive()
                             ->searchable()
@@ -52,25 +61,25 @@ class EmployeesRelationManager extends RelationManager
                                 function (Get $get) {
                                     $country = Country::find($get('country_id'));
 
-                                    if(!$country) {
+                                    if (!$country) {
                                         return State::all()->pluck('name', 'id');
                                     }
                                     return $country->states->pluck('name', 'id');
                                 }
                             )
                             ->afterStateUpdated(
-                                fn (Set $set) => $set('city_id', null)
+                                fn(Set $set) => $set('city_id', null)
                             )
                             ->reactive()
                             ->searchable()
                             ->preload()
                             ->required(),
                         Select::make('city_id')
-                        ->label('City')
+                            ->label('City')
                             ->options(function (Get $get) {
                                 $state = State::find($get('state_id'));
 
-                                if(!$state) {
+                                if (!$state) {
                                     return City::all()->pluck('name', 'id');
                                 }
 
@@ -106,10 +115,37 @@ class EmployeesRelationManager extends RelationManager
             ]);
     }
 
+    public function infolist(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                TextEntry::make('country.name'),
+                TextEntry::make('state.name'),
+                TextEntry::make('city.name'),
+                TextEntry::make('first_name'),
+                TextEntry::make('last_name'),
+                TextEntry::make('address'),
+                TextEntry::make('zip_code'),
+                TextEntry::make('birth_date')
+                    ->date(),
+                TextEntry::make('hired_date')
+                    ->date(),
+                TextEntry::make('deleted_at')
+                    ->dateTime()
+                    ->visible(fn(Employee $record): bool => $record->trashed()),
+                TextEntry::make('created_at')
+                    ->dateTime()
+                    ->placeholder('-'),
+                TextEntry::make('updated_at')
+                    ->dateTime()
+                    ->placeholder('-'),
+            ]);
+    }
+
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('first_name')
+            ->recordTitleAttribute('name')
             ->columns([
                 TextColumn::make('first_name')
                     ->searchable()
@@ -147,19 +183,31 @@ class EmployeesRelationManager extends RelationManager
                     ->toggleable(),
             ])
             ->filters([
-                //
+                TrashedFilter::make(),
             ])
             ->headerActions([
                 CreateAction::make(),
+                AssociateAction::make(),
             ])
-            ->actions([
+            ->recordActions([
+                ViewAction::make(),
                 EditAction::make(),
+                DissociateAction::make(),
                 DeleteAction::make(),
+                ForceDeleteAction::make(),
+                RestoreAction::make(),
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 BulkActionGroup::make([
+                    DissociateBulkAction::make(),
                     DeleteBulkAction::make(),
+                    ForceDeleteBulkAction::make(),
+                    RestoreBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->modifyQueryUsing(fn(Builder $query) => $query
+                ->withoutGlobalScopes([
+                    SoftDeletingScope::class,
+                ]));
     }
 }

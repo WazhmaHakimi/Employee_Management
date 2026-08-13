@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Filament\Resources\DepartmentResource\Pages;
+namespace App\Filament\Resources\Departments\Pages;
 
-use App\Filament\Resources\DepartmentResource;
-use Filament\Actions;
+use App\Filament\Resources\Departments\DepartmentResource;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditDepartment extends EditRecord
@@ -13,7 +14,8 @@ class EditDepartment extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            ViewAction::make(),
+            DeleteAction::make(),
         ];
     }
 }
