@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\EmployeeResource\Pages;
+namespace App\Filament\Resources\Employees\Pages;
 
-use App\Filament\Resources\EmployeeResource;
-use Filament\Actions;
+use App\Filament\Resources\Employees\EmployeeResource;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateEmployee extends CreateRecord
