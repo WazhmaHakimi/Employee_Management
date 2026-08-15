@@ -5,8 +5,6 @@ namespace App\Filament\Resources\Countries\RelationManagers;
 use Filament\Actions\AssociateAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\DissociateAction;
 use Filament\Actions\DissociateBulkAction;
 use Filament\Actions\EditAction;
@@ -28,7 +26,8 @@ class StatesRelationManager extends RelationManager
             ->components([
                 TextInput::make('name')
                     ->required(),
-            ]);
+            ])
+            ->columns(1);
     }
 
     public function infolist(Schema $schema): Schema
@@ -50,9 +49,10 @@ class StatesRelationManager extends RelationManager
                 TextColumn::make('name')
                     ->searchable(),
                 TextColumn::make('created_at')
+                    ->label('Attached At')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(),
                 TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
@@ -63,18 +63,19 @@ class StatesRelationManager extends RelationManager
             ])
             ->headerActions([
                 CreateAction::make(),
-                AssociateAction::make(),
+                AssociateAction::make()
+                    ->label('Attach Existing State')
+                    ->multiple()
+                    ->preloadRecordSelect(),
             ])
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
                 DissociateAction::make(),
-                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     DissociateBulkAction::make(),
-                    DeleteBulkAction::make(),
                 ]),
             ]);
     }

@@ -13,10 +13,12 @@ class StateForm
     {
         return $schema
             ->components([
-                Section::make()
+                Section::make('State Information')
                     ->schema([
                         Select::make('country_id')
                             ->relationship('country', 'name')
+                            ->searchable()
+                            ->preload()
                             ->required(),
                         TextInput::make('name')
                             ->required()

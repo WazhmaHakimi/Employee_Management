@@ -30,6 +30,7 @@ class UsersTable
                     ->searchable()
                     ->toggleable()
             ])
+            ->defaultSort('updated_at', 'desc')
             ->filters([
                 //
             ])

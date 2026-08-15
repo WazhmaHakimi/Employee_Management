@@ -14,7 +14,6 @@ class CityForm
         return $schema
             ->components([
                 Section::make('City Information')
-                    ->description('Manage city details and location information')
                     ->schema([
                         Select::make('state_id')
                             ->relationship('state', 'name')

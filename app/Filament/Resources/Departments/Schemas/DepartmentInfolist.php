@@ -22,7 +22,8 @@ class DepartmentInfolist
                             ->label('Created At'),
                         TextEntry::make('updated_at')
                             ->label('Updated At'),
-                    ]),
+                    ])
+                    ->columns(2),
             ]);
     }
 }

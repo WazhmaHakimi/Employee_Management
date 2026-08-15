@@ -12,7 +12,7 @@ class DepartmentForm
     {
         return $schema
             ->components([
-                Section::make()
+                Section::make('Department Information')
                     ->schema([
                         TextInput::make('name')
                             ->required()

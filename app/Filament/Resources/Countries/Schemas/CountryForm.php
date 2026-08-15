@@ -12,7 +12,7 @@ class CountryForm
     {
         return $schema
             ->components([
-                Section::make()
+                Section::make('Country Information')
                     ->schema([
                         TextInput::make('country_code')
                             ->required(),

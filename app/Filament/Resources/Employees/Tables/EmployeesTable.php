@@ -67,6 +67,7 @@ class EmployeesTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('updated_at', 'desc')
             ->filters([
                 TrashedFilter::make(),
                 SelectFilter::make('department')

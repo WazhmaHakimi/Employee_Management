@@ -20,7 +20,7 @@ class EmployeeForm
     {
         return $schema
             ->components([
-                Section::make()
+                Section::make('Employee Information')
                     ->schema([
                         Select::make('country_id')
                             ->label('Country')
@@ -28,6 +28,7 @@ class EmployeeForm
                             ->afterStateUpdated(
                                 fn(Set $set) => $set('state_id', null)
                             )
+                            ->default(fn () => request()->get('country_id'))
                             ->reactive()
                             ->searchable()
                             ->preload()

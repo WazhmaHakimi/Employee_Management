@@ -2,17 +2,13 @@
 
 namespace App\Filament\Resources\Countries\RelationManagers;
 
+use App\Filament\Resources\Employees\EmployeeResource;
 use App\Models\Employee;
+use Filament\Actions\Action;
 use Filament\Actions\AssociateAction;
 use Filament\Actions\BulkActionGroup;
-use Filament\Actions\CreateAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\DissociateAction;
 use Filament\Actions\DissociateBulkAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\ForceDeleteAction;
-use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
@@ -79,7 +75,7 @@ class EmployeesRelationManager extends RelationManager
                     ->date(),
                 TextEntry::make('deleted_at')
                     ->dateTime()
-                    ->visible(fn (Employee $record): bool => $record->trashed()),
+                    ->visible(fn(Employee $record): bool => $record->trashed()),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),
@@ -94,20 +90,15 @@ class EmployeesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                TextColumn::make('state_id')
-                    ->numeric()
+                TextColumn::make('state.name')
                     ->sortable(),
-                TextColumn::make('city_id')
-                    ->numeric()
+                TextColumn::make('city.name')
                     ->sortable(),
-                TextColumn::make('department_id')
-                    ->numeric()
+                TextColumn::make('department.name')
                     ->sortable(),
                 TextColumn::make('first_name')
                     ->searchable(),
                 TextColumn::make('last_name')
-                    ->searchable(),
-                TextColumn::make('address')
                     ->searchable(),
                 TextColumn::make('zip_code')
                     ->searchable(),
@@ -134,26 +125,33 @@ class EmployeesRelationManager extends RelationManager
                 TrashedFilter::make(),
             ])
             ->headerActions([
-                CreateAction::make(),
+                Action::make('createEmployee')
+                    ->label('Create Employee')
+                    ->url(EmployeeResource::getUrl('create', [
+                        'country_id' => $this->ownerRecord->id,
+                    ])),
                 AssociateAction::make(),
             ])
             ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
+                ViewAction::make()
+                    ->url(fn($record) => EmployeeResource::getUrl('view', [
+                        'record' => $record,
+                    ])),
+                Action::make('editEmployee')
+                    ->label('Edit Employee')
+                    ->url(fn($record) => EmployeeResource::getUrl('edit', [
+                        'record' => $record,
+                    ])),
                 DissociateAction::make(),
-                DeleteAction::make(),
-                ForceDeleteAction::make(),
                 RestoreAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     DissociateBulkAction::make(),
-                    DeleteBulkAction::make(),
-                    ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
                 ]),
             ])
-            ->modifyQueryUsing(fn (Builder $query) => $query
+            ->modifyQueryUsing(fn(Builder $query) => $query
                 ->withoutGlobalScopes([
                     SoftDeletingScope::class,
                 ]));

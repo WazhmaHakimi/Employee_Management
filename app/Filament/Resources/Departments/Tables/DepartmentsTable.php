@@ -16,13 +16,15 @@ class DepartmentsTable
     {
         return $table
             ->columns([
-                TextColumn::make('id')
-                    ->toggleable()
-                    ->searchable()
-                    ->toggleable(),
                 TextColumn::make('name')
                     ->toggleable()
                     ->searchable()
+                    ->toggleable(),
+                TextColumn::make('employees_count')
+                    ->label('Employees Count')
+                    ->counts('employees')
+                    ->alignCenter()
+                    ->sortable()
                     ->toggleable(),
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -33,6 +35,7 @@ class DepartmentsTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('employees_count', 'desc')
             ->filters([
                 //
             ])

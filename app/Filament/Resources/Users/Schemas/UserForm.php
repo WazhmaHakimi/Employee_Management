@@ -15,7 +15,7 @@ class UserForm
     {
         return $schema
             ->components([
-                Section::make()
+                Section::make('User Information')
                     ->schema([
                         TextInput::make('name')
                             ->required()

@@ -50,6 +50,7 @@ class CitiesTable
             ->emptyStateActions([
                 CreateAction::make(),
             ])
+            ->defaultSort('updated_at', 'desc')
             ->filters([
                 //
             ])
