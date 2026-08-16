@@ -6,6 +6,7 @@ use App\Filament\Resources\Cities\Pages\CreateCity;
 use App\Filament\Resources\Cities\Pages\EditCity;
 use App\Filament\Resources\Cities\Pages\ListCities;
 use App\Filament\Resources\Cities\Pages\ViewCity;
+use App\Filament\Resources\Cities\RelationManagers\EmployeesRelationManager;
 use App\Filament\Resources\Cities\Schemas\CityForm;
 use App\Filament\Resources\Cities\Schemas\CityInfolist;
 use App\Filament\Resources\Cities\Tables\CitiesTable;
@@ -47,7 +48,7 @@ class CityResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            EmployeesRelationManager::class,
         ];
     }
 

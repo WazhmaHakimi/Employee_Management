@@ -2,7 +2,10 @@
 
 namespace App\Filament\Resources\Countries\Tables;
 
+use App\Filament\Resources\Countries\CountryResource;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -26,6 +29,11 @@ class CountriesTable
                     ->toggleable(),
             ])
             ->defaultSort('updated_at', 'desc')
+            ->emptyStateHeading('No countries found')
+            ->emptyStateDescription('Create your first country to get started.')
+            ->emptyStateActions([
+                CreateAction::make(),
+            ])
             ->filters([
                 //
             ])

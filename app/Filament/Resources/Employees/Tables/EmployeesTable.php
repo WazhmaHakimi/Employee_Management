@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Employees\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -68,6 +69,11 @@ class EmployeesTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->defaultSort('updated_at', 'desc')
+            ->emptyStateHeading('No employees found')
+            ->emptyStateDescription('Create your first employee to get started.')
+            ->emptyStateActions([
+                CreateAction::make(),
+            ])
             ->filters([
                 TrashedFilter::make(),
                 SelectFilter::make('department')

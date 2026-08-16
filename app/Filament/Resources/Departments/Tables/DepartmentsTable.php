@@ -2,7 +2,10 @@
 
 namespace App\Filament\Resources\Departments\Tables;
 
+use App\Filament\Resources\Departments\DepartmentResource;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -36,6 +39,11 @@ class DepartmentsTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->defaultSort('employees_count', 'desc')
+            ->emptyStateHeading('No departments found')
+            ->emptyStateDescription('Create your first department to get started.')
+            ->emptyStateActions([
+                CreateAction::make(),
+            ])
             ->filters([
                 //
             ])

@@ -28,7 +28,8 @@ class CitiesRelationManager extends RelationManager
             ->components([
                 TextInput::make('name')
                     ->required(),
-            ]);
+            ])
+            ->columns(1);
     }
 
     public function infolist(Schema $schema): Schema
@@ -66,7 +67,10 @@ class CitiesRelationManager extends RelationManager
             ])
             ->headerActions([
                 CreateAction::make(),
-                AssociateAction::make(),
+                AssociateAction::make()
+                ->label('Associate Existing Cities')
+                ->multiple()
+                ->preloadRecordSelect(),
             ])
             ->recordActions([
                 ViewAction::make(),

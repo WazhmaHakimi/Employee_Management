@@ -6,6 +6,8 @@ use App\Filament\Resources\States\Pages\CreateState;
 use App\Filament\Resources\States\Pages\EditState;
 use App\Filament\Resources\States\Pages\ListStates;
 use App\Filament\Resources\States\Pages\ViewState;
+use App\Filament\Resources\States\RelationManagers\CitiesRelationManager;
+use App\Filament\Resources\States\RelationManagers\EmployeesRelationManager;
 use App\Filament\Resources\States\Schemas\StateForm;
 use App\Filament\Resources\States\Schemas\StateInfolist;
 use App\Filament\Resources\States\Tables\StatesTable;
@@ -47,7 +49,8 @@ class StateResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            CitiesRelationManager::class,
+            EmployeesRelationManager::class,
         ];
     }
 
