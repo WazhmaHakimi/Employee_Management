@@ -76,8 +76,30 @@ class EmployeesTable
             ])
             ->filters([
                 TrashedFilter::make(),
-                SelectFilter::make('department')
+                SelectFilter::make('country_id')
+                    ->label('Country')
+                    ->relationship('country', 'name')
+                    ->searchable()
+                    ->multiple()
+                    ->placeholder('Select countries'),
+                SelectFilter::make('state_id')
+                    ->label('State')
+                    ->relationship('state', 'name')
+                    ->searchable()
+                    ->multiple()
+                    ->placeholder('Select states'),
+                SelectFilter::make('city_id')
+                    ->label('City')
+                    ->relationship('city', 'name')
+                    ->searchable()
+                    ->multiple()
+                    ->placeholder('Select cities'),
+                SelectFilter::make('department_id')
+                    ->label('Department')
                     ->relationship('department', 'name')
+                    ->searchable()
+                    ->multiple()
+                    ->placeholder('Select departments'),
             ])
             ->recordActions([
                 ViewAction::make(),

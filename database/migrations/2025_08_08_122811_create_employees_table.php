@@ -14,21 +14,17 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->foreignId('country_id')
-            ->constrained()
-            ->onDelete('cascade')
-            ->onUpdate('cascade');
+                ->constrained()
+                ->onDelete('restrict');
             $table->foreignId('state_id')
-            ->constrained()
-            ->onDelete('cascade')
-            ->onUpdate('cascade');
+                ->constrained()
+                ->onDelete('restrict');
             $table->foreignId('city_id')
-            ->constrained()
-            ->onDelete('cascade')
-            ->onUpdate('cascade');
+                ->constrained()
+                ->onDelete('restrict');
             $table->foreignId('department_id')
-            ->constrained()
-            ->onDelete('cascade')
-            ->onUpdate('cascade');
+                ->constrained()
+                ->onDelete('restrict');
 
             $table->string('first_name');
             $table->string('last_name');

@@ -9,6 +9,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class CitiesTable
@@ -52,7 +53,12 @@ class CitiesTable
             ])
             ->defaultSort('updated_at', 'desc')
             ->filters([
-                //
+                SelectFilter::make('state_id')
+                    ->label('State')
+                    ->relationship('state', 'name')
+                    ->searchable()
+                    ->multiple()
+                    ->placeholder('Select states'),
             ])
             ->recordActions([
                 ViewAction::make(),
