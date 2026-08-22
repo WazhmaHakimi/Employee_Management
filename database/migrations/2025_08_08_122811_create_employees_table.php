@@ -29,6 +29,8 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('address');
+            $table->string('phone_number');
+            $table->string('email');
             $table->char('zip_code');
             $table->date('birth_date');
             $table->date('hired_date');

@@ -29,6 +29,10 @@ class EmployeeInfolist
                             ->label('Last Name'),
                         TextEntry::make('address')
                             ->label('Address'),
+                        TextEntry::make('phone_number')
+                            ->label('Phone Number'),
+                        TextEntry::make('email')
+                            ->label('Email Address'),
                         TextEntry::make('zip_code')
                             ->label('Zip Code'),
                         TextEntry::make('birth_date')

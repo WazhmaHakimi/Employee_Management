@@ -10,7 +10,9 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\TextInputColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
@@ -29,6 +31,13 @@ class EmployeesTable
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
+                TextColumn::make('email')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                TextColumn::make('phone_number')
+                    ->copyable()
+                    ->icon(Heroicon::OutlinedClipboard),
                 TextColumn::make('country.name')
                     ->searchable()
                     ->sortable()

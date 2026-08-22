@@ -24,6 +24,8 @@ class EmployeeFactory extends Factory
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'address' => fake()->address(),
+            'phone_number' => fake()->phoneNumber(),
+            'email' => fake()->safeEmail(),
             'city_id' => fake()->randomElement(City::pluck('id')->toArray()),
             'state_id' => fake()->randomElement(State::pluck('id')->toArray()),
             'country_id' => fake()->randomElement(Country::pluck('id')->toArray()),

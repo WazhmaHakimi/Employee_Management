@@ -28,7 +28,7 @@ class EmployeeForm
                             ->afterStateUpdated(
                                 fn(Set $set) => $set('state_id', null)
                             )
-                            ->default(fn () => request()->get('country_id'))
+                            ->default(fn() => request()->get('country_id'))
                             ->reactive()
                             ->searchable()
                             ->preload()
@@ -48,7 +48,7 @@ class EmployeeForm
                             ->afterStateUpdated(
                                 fn(Set $set) => $set('city_id', null)
                             )
-                            ->default(fn () => request()->get('state_id'))
+                            ->default(fn() => request()->get('state_id'))
                             ->reactive()
                             ->searchable()
                             ->preload()
@@ -64,7 +64,7 @@ class EmployeeForm
 
                                 return $state->cities->pluck('name', 'id');
                             })
-                            ->default(fn () => request()->get('city_id'))
+                            ->default(fn() => request()->get('city_id'))
                             ->reactive()
                             ->searchable()
                             ->preload()
@@ -72,7 +72,7 @@ class EmployeeForm
                         Select::make('department_id')
                             ->relationship('department', 'name')
                             ->searchable()
-                            ->default(fn () => request()->get('department_id'))
+                            ->default(fn() => request()->get('department_id'))
                             ->preload()
                             ->required(),
                         TextInput::make('first_name')
@@ -89,6 +89,11 @@ class EmployeeForm
                         DatePicker::make('hired_date')
                             ->default(now())
                             ->required(),
+                        TextInput::make('phone_number')
+                            ->prefix('+93'),
+                        TextInput::make('email')
+                            ->label('Email Address')
+                            ->email(),
                         Textarea::make('address')
                             ->columnSpanFull(),
                     ])
