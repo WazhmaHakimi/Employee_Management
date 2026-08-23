@@ -6,6 +6,7 @@ use App\Models\City;
 use App\Models\Country;
 use App\Models\Department;
 use App\Models\Employee;
+use App\Models\Position;
 use App\Models\State;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -31,6 +32,7 @@ class DatabaseSeeder extends Seeder
         State::factory(10)->create();
         City::factory(10)->create();
         Department::factory(10)->create();
+        Position::factory(10)->create();
         Employee::factory(10)->create();
     }
 }
