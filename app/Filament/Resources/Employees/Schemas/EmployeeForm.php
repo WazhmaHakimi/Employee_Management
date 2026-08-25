@@ -75,14 +75,18 @@ class EmployeeForm
                             ->default(fn() => request()->get('department_id'))
                             ->preload()
                             ->required(),
+                        Select::make('position_id')
+                            ->relationship('position', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->required(),
                         TextInput::make('first_name')
                             ->required(),
                         TextInput::make('last_name')
                             ->required(),
                         TextInput::make('zip_code')
                             ->required()
-                            ->maxLength(5)
-                            ->columnSpanFull(),
+                            ->maxLength(5),
                         DatePicker::make('birth_date')
                             ->before(now())
                             ->required(),

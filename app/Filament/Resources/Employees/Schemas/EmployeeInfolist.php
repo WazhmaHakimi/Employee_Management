@@ -23,6 +23,8 @@ class EmployeeInfolist
                             ->label('City'),
                         TextEntry::make('department.name')
                             ->label('Department'),
+                        TextEntry::make('position.name')
+                            ->label('Position'),
                         TextEntry::make('first_name')
                             ->label('First Name'),
                         TextEntry::make('last_name')

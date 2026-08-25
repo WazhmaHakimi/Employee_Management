@@ -54,6 +54,10 @@ class EmployeesTable
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
+                TextColumn::make('position.name')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('birth_date')
                     ->date()
                     ->searchable()

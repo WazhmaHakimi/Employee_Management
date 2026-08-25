@@ -20,6 +20,7 @@ class Employee extends Model
         'state_id',
         'country_id',
         'department_id',
+        'position_id',
         'zip_code',
         'birth_date',
         'hired_date'
@@ -43,5 +44,10 @@ class Employee extends Model
     public function department()
     {
         return $this->belongsTo(Department::class);
+    }
+
+    public function position()
+    {
+        return $this->belongsTo(Position::class);
     }
 }

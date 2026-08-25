@@ -29,6 +29,12 @@ class DepartmentsTable
                     ->alignCenter()
                     ->sortable()
                     ->toggleable(),
+                TextColumn::make('positions_count')
+                    ->label('Positions Count')
+                    ->counts('positions')
+                    ->alignCenter()
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

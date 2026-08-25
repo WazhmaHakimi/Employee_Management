@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Department;
+use App\Models\Position;
 use App\Models\State;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -30,6 +31,7 @@ class EmployeeFactory extends Factory
             'state_id' => fake()->randomElement(State::pluck('id')->toArray()),
             'country_id' => fake()->randomElement(Country::pluck('id')->toArray()),
             'department_id' => fake()->randomElement(Department::pluck('id')->toArray()),
+            'position_id' => fake()->randomElement(Position::pluck('id')->toArray()),
             'zip_code' => '10002',
             'birth_date' => fake()->dateTimeBetween('-20 years', 'now'),
             'hired_date' => fake()->date('now'),

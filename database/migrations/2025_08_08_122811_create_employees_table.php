@@ -25,6 +25,9 @@ return new class extends Migration
             $table->foreignId('department_id')
                 ->constrained()
                 ->onDelete('restrict');
+            $table->foreignId('position_id')
+                ->constrained()
+                ->onDelete('restrict');
 
             $table->string('first_name');
             $table->string('last_name');
