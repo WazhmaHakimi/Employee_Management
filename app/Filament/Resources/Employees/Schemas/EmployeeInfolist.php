@@ -25,6 +25,9 @@ class EmployeeInfolist
                             ->label('Department'),
                         TextEntry::make('position.name')
                             ->label('Position'),
+                        TextEntry::make('employment_type')
+                            ->label('Employment Type')
+                            ->formatStateUsing(fn(string $state): string => str_replace('_', ' ', ucfirst($state))),
                         TextEntry::make('first_name')
                             ->label('First Name'),
                         TextEntry::make('last_name')

@@ -21,6 +21,7 @@ class Employee extends Model
         'country_id',
         'department_id',
         'position_id',
+        'employment_type',
         'zip_code',
         'birth_date',
         'hired_date'

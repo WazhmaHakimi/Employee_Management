@@ -80,6 +80,16 @@ class EmployeeForm
                             ->searchable()
                             ->preload()
                             ->required(),
+                        Select::make('employment_type')
+                            ->label('Employment Type')
+                            ->options([
+                                'full_time' => 'Full Time',
+                                'part_time' => 'Part Time',
+                                'contract' => 'Contract',
+                                'intern' => 'Intern',
+                            ])
+                            ->default('full_time')
+                            ->required(),
                         TextInput::make('first_name')
                             ->required(),
                         TextInput::make('last_name')

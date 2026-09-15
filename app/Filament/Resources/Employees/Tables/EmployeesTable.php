@@ -58,6 +58,13 @@ class EmployeesTable
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
+                TextColumn::make('employment_type')
+                    ->label('Employment Type')
+                    ->formatStateUsing(fn(string $state): string => str_replace('_', ' ', ucfirst($state)))
+                    ->badge()
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('birth_date')
                     ->date()
                     ->searchable()

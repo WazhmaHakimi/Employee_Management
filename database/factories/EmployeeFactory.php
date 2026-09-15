@@ -32,6 +32,12 @@ class EmployeeFactory extends Factory
             'country_id' => fake()->randomElement(Country::pluck('id')->toArray()),
             'department_id' => fake()->randomElement(Department::pluck('id')->toArray()),
             'position_id' => fake()->randomElement(Position::pluck('id')->toArray()),
+            'employment_type' => fake()->randomElement([
+                'full_time',
+                'part_time',
+                'contract',
+                'intern',
+            ]),
             'zip_code' => '10002',
             'birth_date' => fake()->dateTimeBetween('-20 years', 'now'),
             'hired_date' => fake()->date('now'),

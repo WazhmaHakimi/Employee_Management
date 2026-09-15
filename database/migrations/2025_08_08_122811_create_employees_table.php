@@ -28,6 +28,12 @@ return new class extends Migration
             $table->foreignId('position_id')
                 ->constrained()
                 ->onDelete('restrict');
+            $table->enum('employment_type', [
+                'full_time',
+                'part_time',
+                'contract',
+                'intern',
+            ])->default('full_time');
 
             $table->string('first_name');
             $table->string('last_name');
