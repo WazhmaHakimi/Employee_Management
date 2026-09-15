@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\EmploymentType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -25,6 +26,12 @@ class Employee extends Model
         'zip_code',
         'birth_date',
         'hired_date'
+    ];
+
+    protected $casts = [
+        'birth_date' => 'date',
+        'hired_date' => 'date',
+        'employement_type' => EmploymentType::class,
     ];
 
     public function country()

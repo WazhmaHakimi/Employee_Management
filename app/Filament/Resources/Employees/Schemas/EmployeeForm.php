@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Employees\Schemas;
 
+use App\Enums\EmploymentType;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\State;
@@ -82,13 +83,8 @@ class EmployeeForm
                             ->required(),
                         Select::make('employment_type')
                             ->label('Employment Type')
-                            ->options([
-                                'full_time' => 'Full Time',
-                                'part_time' => 'Part Time',
-                                'contract' => 'Contract',
-                                'intern' => 'Intern',
-                            ])
-                            ->default('full_time')
+                            ->options(EmploymentType::options())
+                            ->default(EmploymentType::FULL_TIME->value)
                             ->required(),
                         TextInput::make('first_name')
                             ->required(),

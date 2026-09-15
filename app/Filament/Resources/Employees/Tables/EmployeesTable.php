@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Employees\Tables;
 
+use App\Enums\EmploymentType;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
@@ -60,7 +61,9 @@ class EmployeesTable
                     ->toggleable(),
                 TextColumn::make('employment_type')
                     ->label('Employment Type')
-                    ->formatStateUsing(fn(string $state): string => str_replace('_', ' ', ucfirst($state)))
+                    ->formatStateUsing(
+                        fn(string $state): string => EmploymentType::tryFrom($state)?->label() ?? $state
+                    )
                     ->badge()
                     ->searchable()
                     ->sortable()

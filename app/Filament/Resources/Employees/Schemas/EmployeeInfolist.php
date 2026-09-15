@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Employees\Schemas;
 
+use App\Enums\EmploymentType;
 use App\Models\Employee;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
@@ -27,7 +28,9 @@ class EmployeeInfolist
                             ->label('Position'),
                         TextEntry::make('employment_type')
                             ->label('Employment Type')
-                            ->formatStateUsing(fn(string $state): string => str_replace('_', ' ', ucfirst($state))),
+                            ->formatStateUsing(
+                                fn(string $state): string => EmploymentType::tryFrom($state)?->label() ?? $state
+                            ),
                         TextEntry::make('first_name')
                             ->label('First Name'),
                         TextEntry::make('last_name')
